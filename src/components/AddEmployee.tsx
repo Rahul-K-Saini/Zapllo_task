@@ -1,3 +1,4 @@
+"use client";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useEmployees } from "@/context/EmployeeContext";
