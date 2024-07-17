@@ -16,6 +16,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
   const [phoneNumber, setPhoneNumber] = useState("");
   const [company, setCompany] = useState("");
   const [priority, setPriority] = useState("low");
+  const [loading, setLoading] = useState(false);
 
   const { addEmployee } = useEmployees();
 
@@ -56,7 +57,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setLoading(true);
     const employee = {
       firstName,
       lastName,
@@ -71,6 +72,8 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
     } catch (error) {
       alert("Error adding employee");
       console.log(error);
+    }finally{
+      setLoading(false);
     }
 
     setShowAddEmployee(false);
@@ -120,7 +123,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
                 className="px-4 py-2 bg-black text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 type="submit"
               >
-                Add Employee
+                {loading ? " Adding Employee...":"Add Employee"}
               </button>
             </div>
           </form>
