@@ -1,7 +1,4 @@
-import React from "react";
-
 interface Employee {
-  id: number;
   firstName: string;
   lastName: string;
   company: string;
@@ -24,9 +21,9 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ employees }) => {
         Our Team
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {employees.map((emp) => (
+        {employees.map((emp,index) => (
           <div
-            key={emp.id}
+            key={index}
             className="bg-white rounded-md shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 p-2"
           >
             <div className="p-6">

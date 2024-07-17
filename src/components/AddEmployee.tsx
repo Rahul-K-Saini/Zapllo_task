@@ -117,7 +117,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
             <div className="items-center px-4 py-3">
               <button
                 id="ok-btn"
-                className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="px-4 py-2 bg-black text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 type="submit"
               >
                 Add Employee
@@ -130,7 +130,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
             className="absolute top-0 right-0 mt-4 mr-4 text-gray-400 hover:text-gray-600"
             onClick={() => setShowAddEmployee(false)}
           >
-            {/* close icon svg added from internet */}
+            {/* close icon svg added from internet  */}
             <svg
               className="h-6 w-6"
               fill="none"
