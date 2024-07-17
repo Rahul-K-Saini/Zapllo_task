@@ -69,11 +69,11 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
 
     try {
       await axios.post("/api/addEmployee", employee);
-      addEmployee(employee); // updated in local states as well 
+      addEmployee(employee); // Update local state as well
     } catch (error) {
       alert("Error adding employee");
       console.log(error);
-    }finally{
+    } finally {
       setLoading(false);
     }
 
@@ -98,7 +98,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
             Add Employee
           </h3>
 
-          {/* add employee form starts here */}
+          {/* Add employee form starts here */}
           <form className="mt-2 text-left" onSubmit={handleSubmit}>
             {inputAttributes.map((attr, index) => (
               <div key={index} className="mt-2">
@@ -123,18 +123,18 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
                 id="ok-btn"
                 className="px-4 py-2 bg-black text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 type="submit"
+                disabled={loading}
               >
-                {loading ? " Adding Employee...":"Add Employee"}
+                {loading ? "Adding Employee..." : "Add Employee"}
               </button>
             </div>
           </form>
-          {/* form ends here */}
+          {/* Form ends here */}
 
           <button
             className="absolute top-0 right-0 mt-4 mr-4 text-gray-400 hover:text-gray-600"
             onClick={() => setShowAddEmployee(false)}
           >
-            {/* close icon svg added from internet  */}
             <svg
               className="h-6 w-6"
               fill="none"
