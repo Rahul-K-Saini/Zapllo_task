@@ -28,6 +28,7 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ employees }) => {
             key={index}
             className="bg-white rounded-md shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 p-2"
           >
+            
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-800">
                 {emp.firstName} {emp.lastName}
