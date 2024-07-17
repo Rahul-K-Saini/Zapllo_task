@@ -6,6 +6,8 @@ interface Employee {
   priority: string;
 }
 
+
+// props types [ts]
 interface EmployeeListProps {
   employees: Employee[] | null;
 }
@@ -64,6 +66,8 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ employees }) => {
   );
 };
 
+
+// priority function
 function getPriorityColor(priority:string) {
   switch (priority.toLowerCase()) {
     case "high":

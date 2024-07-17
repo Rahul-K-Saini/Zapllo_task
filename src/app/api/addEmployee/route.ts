@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
         );
 
     } catch (error) {
-        console.error('Error in POST /api/employees:', error);
+        console.log('Error', error);
         return NextResponse.json(
             { message: "Internal Server Error" },
             { status: 500 }

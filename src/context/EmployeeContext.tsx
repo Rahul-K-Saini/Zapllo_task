@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  ReactNode,
+} from "react";
 import axios from "axios";
 
 interface Employee {
@@ -9,6 +15,7 @@ interface Employee {
   priority: string;
 }
 
+// context props types [ts]
 interface EmployeesContextProps {
   loading: boolean;
   employees: Employee[];
@@ -20,25 +27,35 @@ interface EmployeesContextProps {
   setPriorityBased: (term: string) => void;
 }
 
-const EmployeesContext = createContext<EmployeesContextProps | undefined>(undefined);
+// creating context
+const EmployeesContext = createContext<EmployeesContextProps | undefined>(
+  undefined
+);
 
 interface EmployeesProviderProps {
   children: ReactNode;
 }
 
-export const EmployeesProvider: React.FC<EmployeesProviderProps> = ({ children }) => {
-  const [priorityBased, setPriorityBased] = useState<string>(""); // Initialize with string type
-  const [loading, setLoading] = useState<boolean>(true); // Initialize with boolean type
+export const EmployeesProvider: React.FC<EmployeesProviderProps> = ({
+  children,
+}) => {
+
+  // global context states
+  const [priorityBased, setPriorityBased] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
+  // fetching employees from api on load
   useEffect(() => {
     const fetchEmployees = async () => {
       setLoading(true);
       try {
         const res = await axios.get("/api/getAllEmployee");
-        const fetchedEmployees = Array.isArray(res.data.employees) ? res.data.employees : [];
+        const fetchedEmployees = Array.isArray(res.data.employees)
+          ? res.data.employees
+          : [];
         setEmployees(fetchedEmployees);
         setFilteredEmployees(fetchedEmployees);
       } catch (error) {
@@ -52,17 +69,23 @@ export const EmployeesProvider: React.FC<EmployeesProviderProps> = ({ children }
     fetchEmployees();
   }, []);
 
+  // for filtering employees based on search term and priority
   useEffect(() => {
     const filterEmployees = () => {
-      let filtered = employees.filter((employee) =>
-        employee.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.company?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.phoneNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+      let filtered = employees.filter(
+        (employee) =>
+          employee.firstName
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          employee.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          employee.company?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          employee.phoneNumber?.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
-      if (priorityBased !== "all" && priorityBased ) {
-        filtered = filtered.filter((employee) => employee.priority === priorityBased);
+      if (priorityBased !== "all" && priorityBased) {
+        filtered = filtered.filter(
+          (employee) => employee.priority === priorityBased
+        );
       }
       setFilteredEmployees(filtered);
     };
@@ -70,20 +93,32 @@ export const EmployeesProvider: React.FC<EmployeesProviderProps> = ({ children }
     filterEmployees();
   }, [searchTerm, employees, priorityBased]);
 
+  // addEmployee function and updating global states
   const addEmployee = (employee: Employee) => {
     setEmployees((prevEmployees) => [...prevEmployees, employee]);
     setFilteredEmployees((prevFiltered) => [...prevFiltered, employee]);
   };
 
+  // provider 
   return (
     <EmployeesContext.Provider
-      value={{ loading, employees, filteredEmployees, addEmployee, searchTerm, setSearchTerm, priorityBased, setPriorityBased }}
+      value={{
+        loading,
+        employees,
+        filteredEmployees,
+        addEmployee,
+        searchTerm,
+        setSearchTerm,
+        priorityBased,
+        setPriorityBased,
+      }}
     >
       {children}
     </EmployeesContext.Provider>
   );
 };
 
+// hook to use context
 export const useEmployees = () => {
   const context = useContext(EmployeesContext);
   if (!context) {

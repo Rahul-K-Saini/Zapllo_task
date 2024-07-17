@@ -67,7 +67,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
 
     try {
       await axios.post("/api/addEmployee", employee);
-      addEmployee(employee);
+      addEmployee(employee); // updated in local states as well 
     } catch (error) {
       alert("Error adding employee");
       console.log(error);

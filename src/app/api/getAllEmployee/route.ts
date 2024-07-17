@@ -5,6 +5,7 @@ import Employee from '@/models/Employee';
 export async function GET() {
     try {
         await connectToDB();
+        // find all employees in the database
         const employees = await Employee.find();
         return NextResponse.json(
             {
@@ -15,7 +16,7 @@ export async function GET() {
         );
     }
     catch (error) {
-        console.error('Error in GET /api/employees:', error);
+        console.log('Error', error);
         return NextResponse.json(
             { message: "Internal Server Error" },
             { status: 500 }
