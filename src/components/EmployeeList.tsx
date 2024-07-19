@@ -1,6 +1,5 @@
 import { Employee } from "@/types/Employee";
 
-// props types [ts]
 interface EmployeeListProps {
   employees: Employee[] | null;
   onDeleteEmployee: (id: string) => void;
@@ -10,7 +9,6 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ employees, onDeleteE
   if (!employees || employees.length === 0) {
     return <p>No employees found.</p>;
   }
-  console.log(employees);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -45,7 +43,6 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ employees, onDeleteE
             </button>
             
             <div className="p-6">
-            <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-800">
                 {emp.firstName} {emp.lastName}
               </h3>
@@ -67,7 +64,6 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ employees, onDeleteE
                 </svg>
                 <span className="text-gray-700">{emp.phoneNumber}</span>
               </div>
-            </div>  
             </div>
             <span
               className={`text-sm font-semibold ${getPriorityColor(
@@ -84,8 +80,7 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ employees, onDeleteE
   );
 };
 
-// priority function
-function getPriorityColor(priority:string) {
+function getPriorityColor(priority: string) {
   switch (priority.toLowerCase()) {
     case "high":
       return "text-red-600";
