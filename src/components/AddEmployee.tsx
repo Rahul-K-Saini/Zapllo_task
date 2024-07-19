@@ -60,6 +60,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
     e.preventDefault();
     setLoading(true);
     const employee = {
+      
       firstName,
       lastName,
       phoneNumber,

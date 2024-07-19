@@ -8,7 +8,7 @@ import React, {
 import axios from "axios";
 
 interface Employee {
-  _id: string;  // Add this line to include the _id
+  _id?: string;  // Add this line to include the _id
   firstName: string;
   lastName: string;
   company: string;
