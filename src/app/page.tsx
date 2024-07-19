@@ -12,7 +12,10 @@ const HomeContent = () => {
     searchTerm,
     setSearchTerm,
     setPriorityBased,
+    deleteEmployee
   } = useEmployees();
+
+  
 
   // setting global state here for search
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +75,7 @@ const HomeContent = () => {
         {loading ? (
           <p>Loading employees...</p>
         ) : (
-          <EmployeeList employees={filteredEmployees} />
+          <EmployeeList employees={filteredEmployees} onDeleteEmployee={deleteEmployee}  />
         )}
       </section>
     </main>

@@ -1,4 +1,5 @@
 interface Employee {
+  _id:string,
   firstName: string;
   lastName: string;
   company: string;
@@ -10,12 +11,14 @@ interface Employee {
 // props types [ts]
 interface EmployeeListProps {
   employees: Employee[] | null;
+  onDeleteEmployee: (id: string) => void;
 }
 
-export const EmployeeList: React.FC<EmployeeListProps> = ({ employees }) => {
+export const EmployeeList: React.FC<EmployeeListProps> = ({ employees, onDeleteEmployee }) => {
   if (!employees || employees.length === 0) {
     return <p>No employees found.</p>;
   }
+  console.log(employees);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -23,12 +26,33 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ employees }) => {
         Our Team
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {employees.map((emp,index) => (
+        {employees.map((emp) => (
           <div
-            key={index}
-            className="bg-white rounded-md shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 p-2"
+            key={emp._id}
+            className="bg-white rounded-md shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 p-2 relative"
           >
+            <button
+              onClick={() => onDeleteEmployee(emp._id)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-500 transition-colors duration-300"
+              aria-label="Delete employee"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                ></path>
+              </svg>
+            </button>
             
+            <div className="p-6">
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2 text-gray-800">
                 {emp.firstName} {emp.lastName}
@@ -51,6 +75,7 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ employees }) => {
                 </svg>
                 <span className="text-gray-700">{emp.phoneNumber}</span>
               </div>
+            </div>  
             </div>
             <span
               className={`text-sm font-semibold ${getPriorityColor(
@@ -66,7 +91,6 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ employees }) => {
     </div>
   );
 };
-
 
 // priority function
 function getPriorityColor(priority:string) {

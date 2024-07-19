@@ -8,6 +8,7 @@ import React, {
 import axios from "axios";
 
 interface Employee {
+  _id: string;  // Add this line to include the _id
   firstName: string;
   lastName: string;
   company: string;
@@ -15,19 +16,18 @@ interface Employee {
   priority: string;
 }
 
-// context props types [ts]
 interface EmployeesContextProps {
   loading: boolean;
   employees: Employee[];
   filteredEmployees: Employee[];
   addEmployee: (employee: Employee) => void;
+  deleteEmployee: (id: string) => Promise<void>;  // Add this line
   searchTerm: string;
   setSearchTerm: (term: string) => void;
   priorityBased: string;
   setPriorityBased: (term: string) => void;
 }
 
-// creating context
 const EmployeesContext = createContext<EmployeesContextProps | undefined>(
   undefined
 );
@@ -39,15 +39,12 @@ interface EmployeesProviderProps {
 export const EmployeesProvider: React.FC<EmployeesProviderProps> = ({
   children,
 }) => {
-
-  // global context states
   const [priorityBased, setPriorityBased] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // fetching employees from api on load
   useEffect(() => {
     const fetchEmployees = async () => {
       setLoading(true);
@@ -69,7 +66,6 @@ export const EmployeesProvider: React.FC<EmployeesProviderProps> = ({
     fetchEmployees();
   }, []);
 
-  // for filtering employees based on search term and priority
   useEffect(() => {
     const filterEmployees = () => {
       let filtered = employees.filter(
@@ -93,13 +89,31 @@ export const EmployeesProvider: React.FC<EmployeesProviderProps> = ({
     filterEmployees();
   }, [searchTerm, employees, priorityBased]);
 
-  // addEmployee function and updating global states
   const addEmployee = (employee: Employee) => {
     setEmployees((prevEmployees) => [...prevEmployees, employee]);
     setFilteredEmployees((prevFiltered) => [...prevFiltered, employee]);
   };
 
-  // provider 
+  const deleteEmployee = async (id: string) => {
+    try {
+      // Make API call to delete employee
+      const res  = await axios.delete(`/api/deleteEmployee?id=${id}`);
+      
+      console.log("ress",res);
+      
+      // Update state after successful deletion
+      setEmployees((prevEmployees) => 
+        prevEmployees.filter(emp => emp._id !== id)
+      );
+      setFilteredEmployees((prevFiltered) => 
+        prevFiltered.filter(emp => emp._id !== id)
+      );
+    } catch (error) {
+      console.error("Error deleting employee:", error);
+      // You might want to show an error message to the user here
+    }
+  };
+
   return (
     <EmployeesContext.Provider
       value={{
@@ -107,6 +121,7 @@ export const EmployeesProvider: React.FC<EmployeesProviderProps> = ({
         employees,
         filteredEmployees,
         addEmployee,
+        deleteEmployee,  // Add this line
         searchTerm,
         setSearchTerm,
         priorityBased,
@@ -118,7 +133,6 @@ export const EmployeesProvider: React.FC<EmployeesProviderProps> = ({
   );
 };
 
-// hook to use context
 export const useEmployees = () => {
   const context = useContext(EmployeesContext);
   if (!context) {
