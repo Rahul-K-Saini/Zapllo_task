@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDB from '@/utils/connectToDB';
 import Employee from '@/models/employee';
 
+
+export const revalidate = 0;
+
 export async function POST(request: NextRequest) {
     try {
         const { firstName, lastName, phoneNumber, company, priority } = await request.json();

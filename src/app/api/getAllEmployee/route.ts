@@ -2,11 +2,13 @@ import { NextResponse } from 'next/server';
 import connectToDB from '@/utils/connectToDB';
 import Employee from '@/models/employee';
 
+export const revalidate = 0;
+
 export async function GET() {
     try {
         await connectToDB();
         // find all employees in the database
-        const employees = await Employee.find();
+        const employees = await Employee.find({});
         return NextResponse.json(
             {
                 message: "Employees fetched successfully",
