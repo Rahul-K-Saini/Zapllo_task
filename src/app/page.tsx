@@ -3,6 +3,7 @@ import { useState } from "react";
 import { EmployeesProvider, useEmployees } from "@/context/EmployeeContext";
 import { AddEmployee } from "@/components/AddEmployee";
 import { EmployeeList } from "@/components/EmployeeList";
+import { Employee } from "@/types/Employee";
 
 const HomeContent = () => {
   const [showAddEmployee, setShowAddEmployee] = useState(false);

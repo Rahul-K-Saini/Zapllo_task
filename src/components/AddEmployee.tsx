@@ -2,6 +2,7 @@
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useEmployees } from "@/context/EmployeeContext";
+import { Employee } from "@/types/Employee";
 
 interface AddEmployeeProps {
   showAddEmployee: boolean;
@@ -60,7 +61,7 @@ export const AddEmployee: React.FC<AddEmployeeProps> = ({
     e.preventDefault();
     setLoading(true);
     const employee = {
-      
+      _id: "",
       firstName,
       lastName,
       phoneNumber,

@@ -1,12 +1,4 @@
-interface Employee {
-  _id:string,
-  firstName: string;
-  lastName: string;
-  company: string;
-  phoneNumber: string;
-  priority: string;
-}
-
+import { Employee } from "@/types/Employee";
 
 // props types [ts]
 interface EmployeeListProps {
